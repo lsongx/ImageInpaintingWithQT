@@ -1,0 +1,38 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/camera-photo-symbolic.svg</file>
+        <file>icons/camera-video-symbolic.svg</file>
+        <file>icons/configure-shortcuts.svg</file>
+        <file>icons/dialog-ok-apply.svg</file>
+        <file>icons/Do4!.png</file>
+        <file>icons/document-open-recent.svg</file>
+        <file>icons/document-save.svg</file>
+        <file>icons/draw-donut.svg</file>
+        <file>icons/edit-clear.svg</file>
+        <file>icons/edit-copy.svg</file>
+        <file>icons/edit-undo.svg</file>
+        <file>icons/Fast.png</file>
+        <file>icons/Fast2.png</file>
+        <file>icons/FastRT.png</file>
+        <file>icons/fileopen.svg</file>
+        <file>icons/go-home.svg</file>
+        <file>icons/Harris2.png</file>
+        <file>icons/help-about.svg</file>
+        <file>icons/media-playback-play.svg</file>
+        <file>icons/media-playback-stop.svg</file>
+        <file>icons/process-stop.svg</file>
+        <file>icons/Sift.png</file>
+        <file>icons/Sift2.png</file>
+        <file>icons/Surf.png</file>
+        <file>icons/Surf2.png</file>
+        <file>icons/view-grid.svg</file>
+        <file>icons/window-close.svg</file>
+        <file>icons/zoom-fit-best.svg</file>
+        <file>icons/zoom-in.svg</file>
+        <file>icons/zoom-original.svg</file>
+        <file>icons/zoom-out.svg</file>
+        <file>icons/inpainting.png</file>
+        <file>icons/Criminisi.png</file>
+        <file>icons/box.gif</file>
+    </qresource>
+</RCC>
