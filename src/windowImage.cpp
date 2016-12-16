@@ -3,11 +3,11 @@
 
 
 WindowImage::WindowImage(QImage* image, QString windowTitle, int windowType)
-    : mImage(image), mWindowTitle(windowTitle), mWindowType(windowType), mImageN(0) {
+    : mImage(image), mWindowTitle(windowTitle), mMaskPath(windowTitle), mWindowType(windowType), mImageN(0) {
     setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
 
-//    loading = new QMovie(":/icons/box.gif");
+    //    loading = new QMovie(":/icons/box.gif");
     mLocale = new QLocale(QLocale::English);
 
     setWindowTitle(mWindowTitle);
@@ -18,6 +18,7 @@ WindowImage::WindowImage(QImage* image, QString windowTitle, int windowType)
 
     uiLabelImage->setPixmap(mPixmap);
 
+    mMaskPath.replace(QString("input"),QString("mask"));
     mImageProcessed = NULL;
     mScaleFactorAbove100 = 0.5;
     mScaleFactorUnder100 = 0.25;
@@ -121,16 +122,14 @@ void WindowImage::applyCriminisi(size_t patchsize) {
 
     if (!mImageProcessed)
     {
-//        uiLabelImage->setMovie(loading);
-//        loading->start();
+        //        uiLabelImage->setMovie(loading);
+        //        loading->start();
 
         Mat colorMat, maskMat, grayMat, outMat;
-        QString maskPath = mWindowTitle;
-        maskPath.replace(QString("input"),QString("mask"));
 
         loadInpaintingImages(
                     mWindowTitle.toStdString(),
-                    maskPath.toStdString(),
+                    mMaskPath.toStdString(),
                     colorMat,
                     maskMat,
                     grayMat
@@ -149,132 +148,89 @@ void WindowImage::applyCriminisi(size_t patchsize) {
         mImageProcessed = new QImage(mImage->size(), QImage::Format_RGB888);
         *mImageProcessed = QImage((uchar*) outMat.data, outMat.cols, outMat.rows, outMat.step, QImage::Format_RGB888).copy();
 
-//        loading->stop();
+        //        loading->stop();
         showOutImage();
     }
 }
 
+void WindowImage::applyHe(int color_type) {
+    mAlgoType = WindowImage::He;
 
-/*
-void WindowImage::applyFast(int threshold, bool nonMaxSuppression) {
-    mAlgoType = WindowImage::PDE_NS;
-    if (mModified)
-        mPixmap = mPixmapOriginal;
+    Mat imgMat, maskTem, maskMat, colorMat;
+    imgMat = imread(mWindowTitle.toStdString());
+    maskTem = imread(mMaskPath.toStdString(), IMREAD_GRAYSCALE);
+    threshold(maskTem, maskMat, 100, true, THRESH_BINARY_INV);
 
-    Mat image(mImage->height(), mImage->width(), CV_8UC4, mImage->bits(), mImage->bytesPerLine()); // With CV_8UC3 it doesn't work
-    Mat imageGrey(mImage->height(), mImage->width(), CV_8UC1);
-    cvtColor(image, imageGrey, CV_RGB2GRAY);
-
-    vector<KeyPoint> keypoints;
-    float time = (float) getTickCount();
-    FAST(imageGrey, keypoints, threshold, nonMaxSuppression);
-
-    mImageTime = mLocale->toString((float)((getTickCount()-time)*1000/getTickFrequency()),'f', 2);
-    mImageKeypoints = mLocale->toString((float)keypoints.size(),'f', 0);
-
-    mPainter->begin(&mPixmap);
-    QPen pen(QColor::fromRgb(255, 0, 0));
-    pen.setWidth(2);
-    mPainter->setPen(pen);
-    mPainter->setRenderHint(QPainter::Antialiasing);
-    for (int n=0; n<keypoints.size(); ++n)
-        mPainter->drawEllipse((int)keypoints.at(n).pt.x, (int)keypoints.at(n).pt.y, 4, 4);
-    mPainter->end();
-
-    mModified = true;
-    uiLabelImage->setPixmap(mPixmap.scaled(mCurrentFactor*mOriginalSize, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-}
-
-void WindowImage::applySift(double threshold, double edgeThreshold, int nOctaves, int nOctaveLayers, bool showOrientation) {
-    mAlgoType = WindowImage::sift;
-    if (mModified)
-        mPixmap = mPixmapOriginal;
-
-    Mat image(mImage->height(), mImage->width(), CV_8UC4, mImage->bits(), mImage->bytesPerLine()); // With CV_8UC3 it doesn't work
-    Mat imageGrey(mImage->height(), mImage->width(), CV_8UC1);
-    cvtColor(image, imageGrey, CV_RGB2GRAY);
-
-    vector<KeyPoint> keypoints;
-    float time = (float) getTickCount();
-    Ptr<Algo2D> Algo = SIFT::create(nOctaveLayers, nOctaves, threshold, edgeThreshold);
-    Algo->detect(imageGrey, keypoints);
-
-    mImageTime = mLocale->toString((float)((getTickCount()-time)*1000/getTickFrequency()),'f', 2);
-    mImageKeypoints = mLocale->toString((float)keypoints.size(),'f', 0);
-
-    QPoint center;
-    int radius;
-    mPainter->begin(&mPixmap);
-    mPainter->setRenderHint(QPainter::Antialiasing);
-    for (int n=0; n<keypoints.size(); ++n) {
-        center.setX((int) (keypoints.at(n).pt.x));
-        center.setY((int) (keypoints.at(n).pt.y));
-        radius = (int) (keypoints.at(n).size); // radius = (int)(keypoints->at(n).size*1.2/9.*2); = 0.266666
-        if (showOrientation) {
-            mPainter->setPen(QColor::fromRgb(255, 0, 0));
-            mPainter->drawLine(QLineF(keypoints.at(n).pt.x,
-                    keypoints.at(n).pt.y,
-                    keypoints.at(n).pt.x + keypoints.at(n).size*qCos(keypoints.at(n).angle*3.14159265/180),
-                    keypoints.at(n).pt.y + keypoints.at(n).size*qSin(keypoints.at(n).angle*3.14159265/180)));
-        }
-        mPainter->setPen(QColor::fromRgb(0, 0, 255));
-        mPainter->drawEllipse(center, radius, radius);
+    switch (color_type) {
+    case 0:
+        colorMat = Mat(imgMat.size(), CV_8UC3, Scalar(0,255,255));
+        break;
+    case 1:
+        colorMat = Mat(imgMat.size(), CV_8UC3, Scalar(255,255,255));
+        break;
+    case 2:
+        colorMat = Mat(imgMat.size(), CV_8UC3, Scalar(0,0,255));
+        break;
     }
-    mPainter->end();
 
-    mModified = true;
-    uiLabelImage->setPixmap(mPixmap.scaled(mCurrentFactor*mOriginalSize, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+    colorMat.copyTo(imgMat, maskMat);
+    mImageProcessed = new QImage(mImage->size(), QImage::Format_RGB888);
+    *mImageProcessed = QImage((uchar*) imgMat.data, imgMat.cols, imgMat.rows, imgMat.step, QImage::Format_RGB888).copy();
+
+    showOutImage();
 }
 
 
+void WindowImage::applyNs(size_t range) {
+    mAlgoType = WindowImage::Ns;
 
+    if (!mImageProcessed) {
+        Mat colorMat, maskMat, imgMat;
+        Mat maskTem;
 
-void WindowImage::applySurf(double threshold, int nOctaves, int nOctaveLayers, bool showOrientation) {
-    mAlgoType = WindowImage::surf;
-    if (mModified)
-        mPixmap = mPixmapOriginal;
+        colorMat = imread(mWindowTitle.toStdString(), IMREAD_COLOR);
+        maskTem = imread(mMaskPath.toStdString(), IMREAD_GRAYSCALE);
+        threshold(maskTem, maskMat, 100, true, THRESH_BINARY_INV);
 
-    Mat image(mImage->height(), mImage->width(), CV_8UC4, mImage->bits(), mImage->bytesPerLine()); // With CV_8UC3 it doesn't work
-    Mat imageGrey(mImage->height(), mImage->width(), CV_8UC1);
-    cvtColor(image, imageGrey, CV_RGB2GRAY);
+        float time = (float) getTickCount();
+        lc::pde_ns(colorMat, maskMat, imgMat, range);
+        mImageTime = mLocale->toString((float)((getTickCount()-time)*1000/getTickFrequency()),'f', 2);
+        mShowOutImg = true;
 
-    vector<KeyPoint> keypoints;
-    float time = getTickCount();
-    Ptr<Algo2D> Algo = SURF::create(threshold, nOctaves, nOctaveLayers, false, false);
-    Algo->detect(imageGrey, keypoints);
+        mImageProcessed = new QImage(mImage->size(), QImage::Format_RGB888);
+        *mImageProcessed = QImage((uchar*) imgMat.data, imgMat.cols, imgMat.rows, imgMat.step, QImage::Format_RGB888).copy();
 
-    mImageTime = mLocale->toString((float)((getTickCount()-time)*1000/getTickFrequency()),'f', 2);
-    mImageKeypoints = mLocale->toString((float) keypoints.size(),'f', 0);
-
-    QPoint center;
-    int radius;
-    mPainter->begin(&mPixmap);
-    mPainter->setRenderHint(QPainter::Antialiasing);
-    for (int n=0; n<keypoints.size(); ++n) {
-        center.setX((int) (keypoints.at(n).pt.x));
-        center.setY((int) (keypoints.at(n).pt.y));
-        radius = (int) (keypoints.at(n).size); // radius = (int)(keypoints->at(n).size*1.2/9.*2); = 0.266666
-        if (showOrientation) {
-            mPainter->setPen(QColor::fromRgb(255, 0, 0));
-            mPainter->drawLine(QLineF(keypoints.at(n).pt.x,
-                    keypoints.at(n).pt.y,
-                    keypoints.at(n).pt.x + keypoints.at(n).size*qCos(keypoints.at(n).angle*3.14159265/180),
-                    keypoints.at(n).pt.y + keypoints.at(n).size*qSin(keypoints.at(n).angle*3.14159265/180)));
-        }
-        mPainter->setPen(QColor::fromRgb(0, 0, 255));
-        mPainter->drawEllipse(center, radius, radius);
+        showOutImage();
     }
-    mPainter->end();
 
-    mModified = true;
-    uiLabelImage->setPixmap(mPixmap.scaled(mCurrentFactor*mOriginalSize, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 }
-*/
+
+void WindowImage::applyTelea(size_t range) {
+    mAlgoType = WindowImage::Telea;
+
+    if (!mImageProcessed) {
+        Mat colorMat, maskMat, imgMat;
+        Mat maskTem;
+
+        colorMat = imread(mWindowTitle.toStdString(), IMREAD_COLOR);
+        maskTem = imread(mMaskPath.toStdString(), IMREAD_GRAYSCALE);
+        threshold(maskTem, maskMat, 100, true, THRESH_BINARY_INV);
+
+        float time = (float) getTickCount();
+        lc::pde_telea(colorMat, maskMat, imgMat, range);
+        mImageTime = mLocale->toString((float)((getTickCount()-time)*1000/getTickFrequency()),'f', 2);
+        mShowOutImg = true;
+
+        mImageProcessed = new QImage(mImage->size(), QImage::Format_RGB888);
+        *mImageProcessed = QImage((uchar*) imgMat.data, imgMat.cols, imgMat.rows, imgMat.step, QImage::Format_RGB888).copy();
+
+        showOutImage();
+    }
+}
 
 void WindowImage::resetImage() {
     mAlgoType = WindowImage::none;
     mImageTime.clear();
-    mImageKeypoints.clear();
     if (mImageProcessed){
         delete mImageProcessed;
         mImageProcessed = NULL;

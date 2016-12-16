@@ -47,6 +47,7 @@ class WindowMain : public QMainWindow, public Ui::windowMain {
 	QActionGroup* mActionGroupZoom;
 	QActionGroup* mActionGroupAlgo;
 	QActionGroup* mActionGroupWindow;
+    QButtonGroup* mButtonGroupMask;
 	enum { maxRecentFiles=8 };
 	QAction* mActionRecentFiles[maxRecentFiles];
     QAction* mCriminisiAction;
@@ -75,7 +76,6 @@ class WindowMain : public QMainWindow, public Ui::windowMain {
 	QLabel* mStatusBarLabelSize;
 	QLabel* mStatusBarLabelTime;
 	QLabel* mStatusBarLabelIcon;
-	QLabel* mStatusBarLabelKeypoints;
 	QLabel* mStatusBarLabelSpaceRight;
 	QLabel* mStatusBarLabelSpaceLeft;
 	QFrame* mStatusBarLine;
@@ -100,11 +100,9 @@ class WindowMain : public QMainWindow, public Ui::windowMain {
     void saveCriminisiParams();
     void resetCriminisiParams();
 	
-    /*
+
     void showHeToolBar();
-    void applyHe();
-    void saveHeParams();
-    void restHeParams();
+    void showMask();
 	
     void showNsToolBar();
     void applyNs();
@@ -116,8 +114,8 @@ class WindowMain : public QMainWindow, public Ui::windowMain {
     void saveTeleaParams();
     void resetTeleaParams();
 	
-//	void do4();
-    */
+    void do4();
+
 	void tile();
 	void cascade();
 	void duplicate();

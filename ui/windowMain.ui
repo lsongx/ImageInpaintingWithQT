@@ -105,8 +105,8 @@
     </property>
     <addaction name="uiActionCriminisi"/>
     <addaction name="uiActionHe"/>
-    <addaction name="uiActionPDE_NS"/>
-    <addaction name="uiActionTELEA"/>
+    <addaction name="uiActionNs"/>
+    <addaction name="uiActionTelea"/>
     <addaction name="separator"/>
     <addaction name="uiActionDo4"/>
    </widget>
@@ -239,8 +239,8 @@
    <addaction name="separator"/>
    <addaction name="uiActionCriminisi"/>
    <addaction name="uiActionHe"/>
-   <addaction name="uiActionPDE_NS"/>
-   <addaction name="uiActionTELEA"/>
+   <addaction name="uiActionNs"/>
+   <addaction name="uiActionTelea"/>
    <addaction name="separator"/>
    <addaction name="uiActionDo4"/>
    <addaction name="uiActionFastRT"/>
@@ -395,7 +395,7 @@
     <string>Ctrl+Shift+W</string>
    </property>
   </action>
-  <action name="uiActionPDE_NS">
+  <action name="uiActionNs">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -407,7 +407,7 @@
     <string>SIFT Features</string>
    </property>
   </action>
-  <action name="uiActionTELEA">
+  <action name="uiActionTelea">
    <property name="checkable">
     <bool>true</bool>
    </property>

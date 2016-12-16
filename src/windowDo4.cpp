@@ -1,25 +1,21 @@
 #include "windowDo4.h"
 
-WindowDo4::WindowDo4(QString windowTitle, WindowImage* harrisImage, WindowImage* fastImage, WindowImage* siftImage, WindowImage* surfImage)
-		: mHarrisImage(harrisImage), mFastImage(fastImage), mSiftImage(siftImage), mSurfImage(surfImage), mTimer(new QTimer()) {
+WindowDo4::WindowDo4(QString windowTitle, WindowImage* CriminisiImage, WindowImage* HeImage, WindowImage* NsImage, WindowImage* TeleaImage)
+        : mCriminisiImage(CriminisiImage), mHeImage(HeImage), mNsImage(NsImage), mTeleaImage(TeleaImage), mTimer(new QTimer()) {
 	setupUi(this);
 	
 	setWindowTitle(windowTitle + " - Do4!");
 	setAttribute(Qt::WA_DeleteOnClose);
 	
-	uiHLayout1->insertWidget(1, mHarrisImage);
-	uiHLayout1->insertWidget(3, mFastImage);
-	uiHLayout2->insertWidget(1, mSiftImage);
-	uiHLayout2->insertWidget(3, mSurfImage);
+    uiHLayout1->insertWidget(1, mCriminisiImage);
+    uiHLayout1->insertWidget(3, mHeImage);
+    uiHLayout2->insertWidget(1, mNsImage);
+    uiHLayout2->insertWidget(3, mTeleaImage);
 	
-	uiHarrisTimeLabel->setText(mHarrisImage->mImageTime);
-	uiHarrisKPLabel->setText(mHarrisImage->mImageKeypoints);
-	uiFastTimeLabel->setText(mFastImage->mImageTime);
-	uiFastKPLabel->setText(mFastImage->mImageKeypoints);
-	uiSiftTimeLabel->setText(mSiftImage->mImageTime);
-	uiSiftKPLabel->setText(mSiftImage->mImageKeypoints);
-	uiSurfTimeLabel->setText(mSurfImage->mImageTime);
-	uiSurfKPLabel->setText(mSurfImage->mImageKeypoints);
+    uiCriminisiTimeLabel->setText(mCriminisiImage->mImageTime);
+    uiHeTimeLabel->setText(mHeImage->mImageTime);
+    uiNsTimeLabel->setText(mNsImage->mImageTime);
+    uiTeleaTimeLabel->setText(mTeleaImage->mImageTime);
 	
 	connect(uiPushButtonZoomBestFit, &QPushButton::released, this, &WindowDo4::zoomBestFit);
 	connect(mTimer, &QTimer::timeout, this, &WindowDo4::zoomBestFit);
@@ -40,10 +36,10 @@ WindowDo4::WindowDo4(QString windowTitle, WindowImage* harrisImage, WindowImage*
 
 
 void WindowDo4::zoomBestFit() {
-	mHarrisImage->zoomBestFit();
-	mFastImage->zoomBestFit();
-	mSiftImage->zoomBestFit();
-	mSurfImage->zoomBestFit();
+    mCriminisiImage->zoomBestFit();
+    mHeImage->zoomBestFit();
+    mNsImage->zoomBestFit();
+    mTeleaImage->zoomBestFit();
 }
 
 

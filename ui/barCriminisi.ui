@@ -70,28 +70,6 @@
     </widget>
    </item>
    <item>
-    <widget class="QFrame" name="frame_3">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>20</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>20</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QLabel" name="label_2">
      <property name="text">
       <string>Patch Size</string>
@@ -151,6 +129,12 @@
    </item>
    <item>
     <widget class="QPushButton" name="uiPushButtonShowProcessedImage">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="toolTip">
       <string>Show Processed Image</string>
      </property>
@@ -160,12 +144,6 @@
      <property name="icon">
       <iconset resource="../icon_src.qrc">
        <normaloff>:/icons/view-grid.svg</normaloff>:/icons/view-grid.svg</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
      </property>
      <property name="checkable">
       <bool>false</bool>

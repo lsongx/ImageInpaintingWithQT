@@ -9,15 +9,15 @@ using namespace std;
 class WindowDo4 : public QWidget, Ui::windowDo4 {
   Q_OBJECT
   public:
-	WindowDo4(QString windowTitle, WindowImage* harrisImage, WindowImage* fastImage, WindowImage* siftImage, WindowImage* surfImage);
+    WindowDo4(QString windowTitle, WindowImage* CriminisiImage, WindowImage* HeImage, WindowImage* NsImage, WindowImage* TeleaImage);
 
   private:
 	void changeEvent(QEvent* event);
 	
-	WindowImage* mHarrisImage;
-	WindowImage* mFastImage;
-	WindowImage* mSiftImage;
-	WindowImage* mSurfImage;
+    WindowImage* mCriminisiImage;
+    WindowImage* mHeImage;
+    WindowImage* mNsImage;
+    WindowImage* mTeleaImage;
 	
 	QTimer* mTimer;
 
