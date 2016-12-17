@@ -158,22 +158,5 @@
  <resources>
   <include location="../icon_src.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>uiRadioButtonColorYellow</sender>
-   <signal>clicked()</signal>
-   <receiver>barHe</receiver>
-   <slot>showYellowMask()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>563</x>
-     <y>22</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>568</x>
-     <y>80</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

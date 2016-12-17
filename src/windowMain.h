@@ -1,6 +1,7 @@
 #ifndef WINDOWMAIN_H
 #define WINDOWMAIN_H
 
+#include <QtDebug>
 #include <QtCore>
 #include <QtWidgets>
 #include "ui_windowMain.h"
@@ -13,7 +14,7 @@
 #include "windowPreferences.h"
 #include "windowAbout.h"
 #include "windowStartup.h"
-#include "windowDo4.h"
+//#include "windowDo4.h"
 
 class WindowMain : public QMainWindow, public Ui::windowMain {
   Q_OBJECT
@@ -103,7 +104,8 @@ class WindowMain : public QMainWindow, public Ui::windowMain {
 
     void showHeToolBar();
     void showMask();
-	
+    /*
+
     void showNsToolBar();
     void applyNs();
     void saveNsParams();
@@ -115,7 +117,7 @@ class WindowMain : public QMainWindow, public Ui::windowMain {
     void resetTeleaParams();
 	
     void do4();
-
+*/
 	void tile();
 	void cascade();
 	void duplicate();

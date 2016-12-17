@@ -71,11 +71,6 @@ WindowMain::WindowMain() : mTotalImages(0) {
     mActionGroupWindow->addAction(uiActionClose);
     mActionGroupWindow->addAction(uiActionCloseAll);
 
-    mButtonGroupMask = new QButtonGroup(this);
-    mButtonGroupMask->addButton(mUIHe.uiRadioButtonColorYellow, 0);
-    mButtonGroupMask->addButton(mUIHe.uiRadioButtonColorBlack, 1);
-    mButtonGroupMask->addButton(mUIHe.uiRadioButtonColorRed, 2);
-
     mStatusBarLabelZoom = new QLabel(uiStatusBar);
     mStatusBarLabelZoom->setFrameShape(QFrame::NoFrame);
     mStatusBarLabelZoom->setAlignment(Qt::AlignHCenter);
@@ -139,33 +134,38 @@ WindowMain::WindowMain() : mTotalImages(0) {
     connect(mUIHe.uiRadioButtonColorYellow, &QAbstractButton::clicked, this, &WindowMain::showMask);
     connect(mUIHe.uiRadioButtonColorBlack, &QAbstractButton::clicked, this, &WindowMain::showMask);
     connect(mUIHe.uiRadioButtonColorRed, &QAbstractButton::clicked, this, &WindowMain::showMask);
+    mHeAction = uiToolBarParameters->addWidget(mHeToolBar);
 
+    mButtonGroupMask = new QButtonGroup(mHeToolBar);
+    mButtonGroupMask->addButton(mUIHe.uiRadioButtonColorYellow, 0);
+    mButtonGroupMask->addButton(mUIHe.uiRadioButtonColorBlack, 1);
+    mButtonGroupMask->addButton(mUIHe.uiRadioButtonColorRed, 2);
 
     mNSToolBar = new QWidget();
     mNSToolBar->setVisible(false);
     mUIpde_ns.setupUi(mNSToolBar);
-    mUIpde_ns.uiSpinBoxRadius->setValue(mSettings->value("Ns/Radius", 4).toInt());
-    connect(mUIpde_ns.uiSpinBoxRadius, &QSpinBox::editingFinished, this, &WindowMain::saveNsParams);
-    connect(mUIpde_ns.uiPushButtonShowProcessedImage, &QAbstractButton::clicked, this, &WindowMain::showOutImage);
-    connect(mUIpde_ns.uiButtonBox->button(QDialogButtonBox::Apply), &QAbstractButton::clicked, this, &WindowMain::applyNs);
-    connect(mUIpde_ns.uiButtonBox->button(QDialogButtonBox::Reset), &QAbstractButton::clicked, this, &WindowMain::resetNsParams);
+    //    mUIpde_ns.uiSpinBoxRadius->setValue(mSettings->value("Ns/Radius", 4).toInt());
+    //    connect(mUIpde_ns.uiSpinBoxRadius, &QSpinBox::editingFinished, this, &WindowMain::saveNsParams);
+    //    connect(mUIpde_ns.uiPushButtonShowProcessedImage, &QAbstractButton::clicked, this, &WindowMain::showOutImage);
+    //    connect(mUIpde_ns.uiButtonBox->button(QDialogButtonBox::Apply), &QAbstractButton::clicked, this, &WindowMain::applyNs);
+    //    connect(mUIpde_ns.uiButtonBox->button(QDialogButtonBox::Reset), &QAbstractButton::clicked, this, &WindowMain::resetNsParams);
     mNSAction = uiToolBarParameters->addWidget(mNSToolBar);
 
     mTeleaToolBar = new QWidget();
     mTeleaToolBar->setVisible(false);
     mUItelea.setupUi(mTeleaToolBar);
-    mUItelea.uiSpinBoxRadius->setValue(mSettings->value("Ns/Radius", 4).toInt());
-    connect(mUItelea.uiSpinBoxRadius, &QSpinBox::editingFinished, this, &WindowMain::saveTeleaParams);
-    connect(mUItelea.uiPushButtonShowProcessedImage, &QAbstractButton::clicked, this, &WindowMain::showOutImage);
-    connect(mUItelea.uiButtonBox->button(QDialogButtonBox::Apply), &QAbstractButton::clicked, this, &WindowMain::applyTelea);
-    connect(mUItelea.uiButtonBox->button(QDialogButtonBox::Reset), &QAbstractButton::clicked, this, &WindowMain::resetTeleaParams);
+    //    mUItelea.uiSpinBoxRadius->setValue(mSettings->value("Ns/Radius", 4).toInt());
+    //    connect(mUItelea.uiSpinBoxRadius, &QSpinBox::editingFinished, this, &WindowMain::saveTeleaParams);
+    //    connect(mUItelea.uiPushButtonShowProcessedImage, &QAbstractButton::clicked, this, &WindowMain::showOutImage);
+    //    connect(mUItelea.uiButtonBox->button(QDialogButtonBox::Apply), &QAbstractButton::clicked, this, &WindowMain::applyTelea);
+    //    connect(mUItelea.uiButtonBox->button(QDialogButtonBox::Reset), &QAbstractButton::clicked, this, &WindowMain::resetTeleaParams);
     mTeleaAction = uiToolBarParameters->addWidget(mTeleaToolBar);
 
     switch (mSettings->value("startupParameters", 0).toInt()) {
     case 0: showCriminisiToolBar(); break;
     case 1: showHeToolBar(); break;
-    case 2: showNsToolBar(); break;
-    case 3: showTeleaToolBar(); break;
+        //    case 2: showNsToolBar(); break;
+        //    case 3: showTeleaToolBar(); break;
     }
 
     connect(uiActionOpen, &QAction::triggered, this, &WindowMain::open);
@@ -182,9 +182,9 @@ WindowMain::WindowMain() : mTotalImages(0) {
     connect(uiActionZoomBestFit, &QAction::triggered, this, &WindowMain::zoom);
     connect(uiActionCriminisi, &QAction::triggered, this, &WindowMain::showCriminisiToolBar);
     connect(uiActionHe, &QAction::triggered, this, &WindowMain::showHeToolBar);
-    connect(uiActionNs, &QAction::triggered, this, &WindowMain::showNsToolBar);
-    connect(uiActionTelea, &QAction::triggered, this, &WindowMain::showTeleaToolBar);
-    connect(uiActionDo4, &QAction::triggered, this, &WindowMain::do4);
+    //    connect(uiActionNs, &QAction::triggered, this, &WindowMain::showNsToolBar);
+    //    connect(uiActionTelea, &QAction::triggered, this, &WindowMain::showTeleaToolBar);
+    //    connect(uiActionDo4, &QAction::triggered, this, &WindowMain::do4);
     connect(uiActionTile, &QAction::triggered, this, &WindowMain::tile);
     connect(uiActionCascade, &QAction::triggered, this, &WindowMain::cascade);
     connect(uiActionNext, &QAction::triggered, uiMdiArea, &QMdiArea::activateNextSubWindow);
@@ -321,6 +321,7 @@ void WindowMain::showHeToolBar() {
     mCurrentAlgoAction->setVisible(true);
     mSettings->setValue("startupParameters", 1);
     uiActionHe->setChecked(true);
+    mUIHe.uiRadioButtonColorYellow->click();
     mUIHe.uiRadioButtonColorYellow->setChecked(true);
 }
 
@@ -335,7 +336,7 @@ void WindowMain::showMask() {
     }
 }
 
-
+/*
 
 
 void WindowMain::showNsToolBar() {
@@ -409,7 +410,23 @@ void WindowMain::saveTeleaParams() {
     mSettings->setValue("Telea/Radius", mUItelea.uiSpinBoxRadius->value());
 }
 
+void WindowMain::do4() {
+    WindowImage* CriminisiImage = new WindowImage(mActiveWindowImage->mImage, mActiveWindowImage->mWindowTitle);
+    WindowImage* HeImage = new WindowImage(mActiveWindowImage->mImage, mActiveWindowImage->mWindowTitle);
+    WindowImage* NsImage = new WindowImage(mActiveWindowImage->mImage, mActiveWindowImage->mWindowTitle);
+    WindowImage* TeleaImage = new WindowImage(mActiveWindowImage->mImage, mActiveWindowImage->mWindowTitle);
 
+    CriminisiImage->applyCriminisi(mSettings->value("Criminisi/PatchSize", 1).toInt());
+
+    HeImage->applyHe(WindowImage::colorType::yellow);
+
+    NsImage->applyNs(mSettings->value("Ns/Radius", 4).toInt());
+
+    TeleaImage->applyTelea(mSettings->value("Telea/Radius", 4).toInt());
+
+    new WindowDo4(mActiveWindowImage->mWindowTitle, CriminisiImage, HeImage, NsImage, TeleaImage);
+}
+*/
 
 // apply result params
 void WindowMain::applyCommonTasks() {
@@ -437,22 +454,6 @@ void WindowMain::resetImage() {
 
 
 
-void WindowMain::do4() {
-    WindowImage* CriminisiImage = new WindowImage(mActiveWindowImage->mImage, mActiveWindowImage->mWindowTitle);
-    WindowImage* HeImage = new WindowImage(mActiveWindowImage->mImage, mActiveWindowImage->mWindowTitle);
-    WindowImage* NsImage = new WindowImage(mActiveWindowImage->mImage, mActiveWindowImage->mWindowTitle);
-    WindowImage* TeleaImage = new WindowImage(mActiveWindowImage->mImage, mActiveWindowImage->mWindowTitle);
-
-    CriminisiImage->applyCriminisi(mSettings->value("Criminisi/PatchSize", 1).toInt());
-
-    HeImage->applyHe(WindowImage::colorType::yellow);
-
-    NsImage->applyNs(mSettings->value("Ns/Radius", 4).toInt());
-
-    TeleaImage->applyTelea(mSettings->value("Telea/Radius", 4).toInt());
-
-    new WindowDo4(mActiveWindowImage->mWindowTitle, CriminisiImage, HeImage, NsImage, TeleaImage);
-}
 
 
 void WindowMain::tile() {
@@ -547,10 +548,18 @@ void WindowMain::updateWindowMenu(QMdiSubWindow* mdiSubWindow) {
         if (!mActiveWindowImage->mImageTime.isEmpty()) {
             uiActionResetImage->setEnabled(true);
             switch (mActiveWindowImage->mAlgoType) {
-            case WindowImage::criminisi: mStatusBarLabelIcon->setPixmap(QPixmap::fromImage(QImage(":/:/icons/Criminisi.png"))); break;
-            case WindowImage::He: mStatusBarLabelIcon->setPixmap(QPixmap::fromImage(QImage(":/:/icons/Telea.png"))); break;
-            case WindowImage::Ns: mStatusBarLabelIcon->setPixmap(QPixmap::fromImage(QImage(":/:/icons/He.png"))); break;
-            case WindowImage::Telea: mStatusBarLabelIcon->setPixmap(QPixmap::fromImage(QImage(":/icons/Ns.png"))); break;
+            case WindowImage::criminisi:
+                mStatusBarLabelIcon->setPixmap(QPixmap::fromImage(QImage(":/:/icons/Criminisi.png")));
+                break;
+            case WindowImage::He:
+                mStatusBarLabelIcon->setPixmap(QPixmap::fromImage(QImage(":/:/icons/He.png")));
+                break;
+            case WindowImage::Ns:
+                mStatusBarLabelIcon->setPixmap(QPixmap::fromImage(QImage(":/:/icons/Ns.png")));
+                break;
+            case WindowImage::Telea:
+                mStatusBarLabelIcon->setPixmap(QPixmap::fromImage(QImage(":/icons/Telea.png")));
+                break;
             }
             mStatusBarLabelIcon->setVisible(true);
             mStatusBarLabelTime->setText(mActiveWindowImage->mImageTime + " ms");
@@ -615,6 +624,8 @@ void WindowMain::loadFile(QString filePath) {
         if (!image->isNull()) {
             setRecentFile(filePath);
             showWindowImage(new WindowImage(image, filePath));
+            if (mHeAction->isVisible())
+                mUIHe.uiRadioButtonColorYellow->click();
         } else {
             removeRecentFile(filePath);
             QMessageBox::warning(this, tr("Image Inpainting"), tr("Cannot open %1.").arg(filePath));

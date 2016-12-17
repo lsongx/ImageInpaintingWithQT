@@ -166,7 +166,7 @@ void WindowImage::applyHe(int color_type) {
         colorMat = Mat(imgMat.size(), CV_8UC3, Scalar(0,255,255));
         break;
     case 1:
-        colorMat = Mat(imgMat.size(), CV_8UC3, Scalar(255,255,255));
+        colorMat = Mat(imgMat.size(), CV_8UC3, Scalar(0,0,0));
         break;
     case 2:
         colorMat = Mat(imgMat.size(), CV_8UC3, Scalar(0,0,255));
@@ -174,13 +174,15 @@ void WindowImage::applyHe(int color_type) {
     }
 
     colorMat.copyTo(imgMat, maskMat);
+    cvtColor(imgMat, imgMat, CV_BGR2RGB);
     mImageProcessed = new QImage(mImage->size(), QImage::Format_RGB888);
     *mImageProcessed = QImage((uchar*) imgMat.data, imgMat.cols, imgMat.rows, imgMat.step, QImage::Format_RGB888).copy();
 
+    mShowOutImg = true;
     showOutImage();
 }
 
-
+/*
 void WindowImage::applyNs(size_t range) {
     mAlgoType = WindowImage::Ns;
 
@@ -227,6 +229,7 @@ void WindowImage::applyTelea(size_t range) {
         showOutImage();
     }
 }
+*/
 
 void WindowImage::resetImage() {
     mAlgoType = WindowImage::none;

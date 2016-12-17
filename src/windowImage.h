@@ -20,8 +20,8 @@ public:
     void showOutImage();
     void applyCriminisi(size_t patchsize);
     void applyHe(int color_type);
-    void applyNs(size_t range);
-    void applyTelea(size_t range);
+//    void applyNs(size_t range);
+//    void applyTelea(size_t range);
 
     enum windowType {normal=0, duplicated=1, fromWebcam=2, do4=3};
     enum AlgoType {none=0, criminisi=1, He=2, Ns=3, Telea=4};
