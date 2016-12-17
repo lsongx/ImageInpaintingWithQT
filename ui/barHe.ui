@@ -65,7 +65,7 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../icon_src.qrc">:/icons/Surf.png</pixmap>
+      <pixmap resource="../icon_src.qrc">:/icons/He.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -87,6 +87,11 @@
    </item>
    <item>
     <widget class="QLabel" name="label_2">
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+      </font>
+     </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
      </property>
@@ -106,6 +111,11 @@
    </item>
    <item>
     <widget class="QRadioButton" name="uiRadioButtonColorYellow">
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+      </font>
+     </property>
      <property name="toolTip">
       <string>Show Descriptor Orientation</string>
      </property>
@@ -128,6 +138,11 @@
    </item>
    <item>
     <widget class="QRadioButton" name="uiRadioButtonColorBlack">
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+      </font>
+     </property>
      <property name="text">
       <string>Black</string>
      </property>
@@ -135,6 +150,11 @@
    </item>
    <item>
     <widget class="QRadioButton" name="uiRadioButtonColorRed">
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+      </font>
+     </property>
      <property name="text">
       <string>Red</string>
      </property>

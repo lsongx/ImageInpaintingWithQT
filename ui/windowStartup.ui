@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>windowStartup</class>
  <widget class="QDialog" name="windowStartup">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>340</height>
+   </rect>
+  </property>
   <property name="sizePolicy">
    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
     <horstretch>0</horstretch>
@@ -141,6 +149,11 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+          </font>
+         </property>
          <property name="text">
           <string>Open Recent File</string>
          </property>
@@ -185,6 +198,11 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+          </font>
          </property>
          <property name="text">
           <string>Show this dialog on Startup</string>

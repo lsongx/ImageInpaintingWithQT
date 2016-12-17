@@ -149,7 +149,6 @@ void WindowImage::applyCriminisi(size_t patchsize) {
         *mImageProcessed = QImage((uchar*) outMat.data, outMat.cols, outMat.rows, outMat.step, QImage::Format_RGB888).copy();
 
         //        loading->stop();
-        showOutImage();
     }
 }
 
@@ -182,7 +181,6 @@ void WindowImage::applyHe(int color_type) {
     showOutImage();
 }
 
-/*
 void WindowImage::applyNs(size_t range) {
     mAlgoType = WindowImage::Ns;
 
@@ -199,12 +197,10 @@ void WindowImage::applyNs(size_t range) {
         mImageTime = mLocale->toString((float)((getTickCount()-time)*1000/getTickFrequency()),'f', 2);
         mShowOutImg = true;
 
+        cvtColor(imgMat, imgMat, CV_BGR2RGB);
         mImageProcessed = new QImage(mImage->size(), QImage::Format_RGB888);
         *mImageProcessed = QImage((uchar*) imgMat.data, imgMat.cols, imgMat.rows, imgMat.step, QImage::Format_RGB888).copy();
-
-        showOutImage();
     }
-
 }
 
 void WindowImage::applyTelea(size_t range) {
@@ -223,12 +219,12 @@ void WindowImage::applyTelea(size_t range) {
         mImageTime = mLocale->toString((float)((getTickCount()-time)*1000/getTickFrequency()),'f', 2);
         mShowOutImg = true;
 
+        cvtColor(imgMat, imgMat, CV_BGR2RGB);
         mImageProcessed = new QImage(mImage->size(), QImage::Format_RGB888);
         *mImageProcessed = QImage((uchar*) imgMat.data, imgMat.cols, imgMat.rows, imgMat.step, QImage::Format_RGB888).copy();
-
-        showOutImage();
     }
 }
+/*
 */
 
 void WindowImage::resetImage() {
@@ -238,6 +234,7 @@ void WindowImage::resetImage() {
         delete mImageProcessed;
         mImageProcessed = NULL;
     }
+    mShowOutImg = false;
     mPixmap = QPixmap::fromImage(*mImage);
     uiLabelImage->setPixmap(mPixmap.scaled(mCurrentFactor*mOriginalSize, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 }

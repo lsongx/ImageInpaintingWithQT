@@ -1,19 +1,19 @@
 #include "windowDo4.h"
 
-WindowDo4::WindowDo4(QString windowTitle, WindowImage* CriminisiImage, WindowImage* HeImage, WindowImage* NsImage, WindowImage* TeleaImage)
+WindowDo4::WindowDo4(QString windowTitle, WindowImage* HeImage, WindowImage* CriminisiImage, WindowImage* NsImage, WindowImage* TeleaImage)
         : mCriminisiImage(CriminisiImage), mHeImage(HeImage), mNsImage(NsImage), mTeleaImage(TeleaImage), mTimer(new QTimer()) {
 	setupUi(this);
 	
 	setWindowTitle(windowTitle + " - Do4!");
 	setAttribute(Qt::WA_DeleteOnClose);
 	
-    uiHLayout1->insertWidget(1, mCriminisiImage);
-    uiHLayout1->insertWidget(3, mHeImage);
+    uiHLayout1->insertWidget(1, mHeImage);
+    uiHLayout1->insertWidget(3, mCriminisiImage);
     uiHLayout2->insertWidget(1, mNsImage);
     uiHLayout2->insertWidget(3, mTeleaImage);
 	
     uiCriminisiTimeLabel->setText(mCriminisiImage->mImageTime);
-    uiHeTimeLabel->setText(mHeImage->mImageTime);
+    uiHeTimeLabel->setText("");
     uiNsTimeLabel->setText(mNsImage->mImageTime);
     uiTeleaTimeLabel->setText(mTeleaImage->mImageTime);
 	
@@ -41,7 +41,6 @@ void WindowDo4::zoomBestFit() {
     mNsImage->zoomBestFit();
     mTeleaImage->zoomBestFit();
 }
-
 
 
 

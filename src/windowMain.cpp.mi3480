@@ -120,9 +120,9 @@ WindowMain::WindowMain() : mTotalImages(0) {
     mCriminisiToolBar = new QWidget();
     mCriminisiToolBar->setVisible(false);
     mUICriminisi.setupUi(mCriminisiToolBar);
-    mUICriminisi.uiSpinBoxPatchSize->setValue(mSettings->value("Criminisi/PatchSize", 4).toInt());
+    mUICriminisi.uiComboBoxPatchSize->setCurrentIndex(mSettings->value("Criminisi/PatchSize", 1).toInt());
     connect(mUICriminisi.uiPushButtonShowProcessedImage, &QAbstractButton::clicked, this, &WindowMain::showOutImage);
-    connect(mUICriminisi.uiSpinBoxPatchSize, &QSpinBox::editingFinished, this, &WindowMain::saveCriminisiParams);
+    connect(mUICriminisi.uiComboBoxPatchSize, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &WindowMain::saveCriminisiParams);
     connect(mUICriminisi.uiButtonBox->button(QDialogButtonBox::Apply), &QAbstractButton::clicked, this, &WindowMain::applyCriminisi);
     connect(mUICriminisi.uiButtonBox->button(QDialogButtonBox::Reset), &QAbstractButton::clicked, this, &WindowMain::resetCriminisiParams);
     mCriminisiAction = uiToolBarParameters->addWidget(mCriminisiToolBar);
@@ -311,14 +311,14 @@ void WindowMain::showCriminisiToolBar() {
 }
 
 void WindowMain::resetCriminisiParams() {
-    mUICriminisi.uiSpinBoxPatchSize->setValue(4);
+    mUICriminisi.uiComboBoxPatchSize->setCurrentIndex(1);
     saveCriminisiParams();
     mActiveWindowImage->resetImage();
     changeProcessedUi();
 }
 
 void WindowMain::applyCriminisi() {
-    mActiveWindowImage->applyCriminisi(mSettings->value("Criminisi/PatchSize", 4).toInt());
+    mActiveWindowImage->applyCriminisi(mSettings->value("Criminisi/CriminisiApertureSize", 4).toInt());
     mStatusBarLabelIcon->setPixmap(QPixmap::fromImage(QImage(":/icons/Criminisi.png")));
     mActiveWindow->setWindowIcon(*mIconCriminisi);
     applyCommonTasks();
@@ -326,7 +326,7 @@ void WindowMain::applyCriminisi() {
 }
 
 void WindowMain::saveCriminisiParams() {
-    mSettings->setValue("Criminisi/PatchSize", mUICriminisi.uiSpinBoxPatchSize->value());
+    mSettings->setValue("Criminisi/PatchSize", mUICriminisi.uiComboBoxPatchSize->currentIndex());
 }
 
 
@@ -450,18 +450,16 @@ void WindowMain::do4() {
     WindowImage* HeImage = new WindowImage(mActiveWindowImage->mImage, mActiveWindowImage->mWindowTitle);
     WindowImage* NsImage = new WindowImage(mActiveWindowImage->mImage, mActiveWindowImage->mWindowTitle);
     WindowImage* TeleaImage = new WindowImage(mActiveWindowImage->mImage, mActiveWindowImage->mWindowTitle);
+    CriminisiImage->applyCriminisi(mSettings->value("Criminisi/PatchSize", 1).toInt());
+    QMessageBox::information(NULL, "Oh...sorry", mActiveWindowImage->mWindowTitle);
 
-//    QMessageBox::information(NULL, "Oh...sorry", mActiveWindowImage->mWindowTitle);
-    CriminisiImage->applyCriminisi(mSettings->value("Criminisi/PatchSize", 4).toInt());
-    CriminisiImage->showOutImage();
     HeImage->applyHe(WindowImage::colorType::yellow);
+
     NsImage->applyNs(mSettings->value("Ns/Radius", 4).toInt());
-    NsImage->showOutImage();
+
     TeleaImage->applyTelea(mSettings->value("Telea/Radius", 4).toInt());
-    TeleaImage->showOutImage();
 
-    new WindowDo4(mActiveWindowImage->mWindowTitle, HeImage, CriminisiImage, NsImage, TeleaImage);
-
+    new WindowDo4(mActiveWindowImage->mWindowTitle, CriminisiImage, HeImage, NsImage, TeleaImage);
 }
 /*
 */

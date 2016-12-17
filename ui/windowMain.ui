@@ -103,8 +103,8 @@
     <property name="title">
      <string>Algorithms</string>
     </property>
-    <addaction name="uiActionCriminisi"/>
     <addaction name="uiActionHe"/>
+    <addaction name="uiActionCriminisi"/>
     <addaction name="uiActionNs"/>
     <addaction name="uiActionTelea"/>
     <addaction name="separator"/>
@@ -237,8 +237,8 @@
     <bool>false</bool>
    </attribute>
    <addaction name="separator"/>
-   <addaction name="uiActionCriminisi"/>
    <addaction name="uiActionHe"/>
+   <addaction name="uiActionCriminisi"/>
    <addaction name="uiActionNs"/>
    <addaction name="uiActionTelea"/>
    <addaction name="separator"/>
@@ -401,10 +401,10 @@
    </property>
    <property name="icon">
     <iconset resource="../icon_src.qrc">
-     <normaloff>:/icons/Sift.png</normaloff>:/icons/Sift.png</iconset>
+     <normaloff>:/icons/Ns.png</normaloff>:/icons/Ns.png</iconset>
    </property>
    <property name="text">
-    <string>SIFT Features</string>
+    <string>PDE NS Inpainting</string>
    </property>
   </action>
   <action name="uiActionTelea">
@@ -413,10 +413,10 @@
    </property>
    <property name="icon">
     <iconset resource="../icon_src.qrc">
-     <normaloff>:/icons/Surf.png</normaloff>:/icons/Surf.png</iconset>
+     <normaloff>:/icons/Telea.png</normaloff>:/icons/Telea.png</iconset>
    </property>
    <property name="text">
-    <string>SURF Features</string>
+    <string>PDE Telea Inpainting</string>
    </property>
   </action>
   <action name="uiActionCriminisi">
@@ -437,10 +437,10 @@
    </property>
    <property name="icon">
     <iconset resource="../icon_src.qrc">
-     <normaloff>:/icons/Fast.png</normaloff>:/icons/Fast.png</iconset>
+     <normaloff>:/icons/He.png</normaloff>:/icons/He.png</iconset>
    </property>
    <property name="text">
-    <string>FAST Features</string>
+    <string>Show Mask</string>
    </property>
   </action>
   <action name="uiActionZoomIn">

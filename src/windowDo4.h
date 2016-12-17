@@ -9,7 +9,7 @@ using namespace std;
 class WindowDo4 : public QWidget, Ui::windowDo4 {
   Q_OBJECT
   public:
-    WindowDo4(QString windowTitle, WindowImage* CriminisiImage, WindowImage* HeImage, WindowImage* NsImage, WindowImage* TeleaImage);
+    WindowDo4(QString windowTitle, WindowImage* HeImage, WindowImage* CriminisiImage, WindowImage* NsImage, WindowImage* TeleaImage);
 
   private:
 	void changeEvent(QEvent* event);
