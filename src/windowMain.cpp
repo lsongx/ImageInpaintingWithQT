@@ -352,6 +352,8 @@ void WindowMain::showMask() {
     case 1: mActiveWindowImage->applyHe(WindowImage::colorType::black); break;
     case 2: mActiveWindowImage->applyHe(WindowImage::colorType::red); break;
     }
+    mStatusBarLabelIcon->setPixmap(QPixmap::fromImage(QImage(":/icons/He.png")));
+    mActiveWindow->setWindowIcon(*mIconHe);
 }
 
 
